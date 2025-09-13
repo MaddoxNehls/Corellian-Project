@@ -4,7 +4,7 @@ A modern, full-stack task management application built with ASP.NET Core, GraphQ
 
 ## 🎬 **Video Demonstration**
 
-**Watch the 5-minute video walkthrough:** [https://streamable.com/xd5hb5](https://streamable.com/xd5hb5)
+**Watch the 5-minute video walkthrough:** [https://streamable.com/xd5hb5]([https://streamable.com/xd5hb5](https://www.youtube.com/watch?v=CyjPVMjIFNY)) NOTE: YOU MAY HAVE TO WATCH IN THEATRE MODE TO SEE MY FULL CAMERA
 
 *This video demonstrates the complete application functionality, technical implementation, and development process using AI-accelerated workflow.*
 
