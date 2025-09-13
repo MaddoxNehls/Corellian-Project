@@ -1,0 +1,43 @@
+schema {
+  query: TaskQueries
+  mutation: TaskMutations
+}
+
+type TaskQueries {
+  getAllTasks: [TaskType!]!
+  getTaskById(id: Int!): TaskType
+  getTasksByStatus(status: TaskStatus!): [TaskType!]!
+}
+
+type TaskMutations {
+  createTask(input: CreateTaskInput!): TaskType!
+  updateTaskStatus(input: UpdateTaskStatusInput!): TaskType
+  deleteTask(id: Int!): Boolean!
+  updateTask(id: Int!, input: CreateTaskInput!): TaskType
+}
+
+type TaskType {
+  id: Int!
+  title: String!
+  description: String
+  status: TaskStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input CreateTaskInput {
+  title: String!
+  description: String
+}
+
+input UpdateTaskStatusInput {
+  id: Int!
+  status: TaskStatus!
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+}
+
+scalar DateTime

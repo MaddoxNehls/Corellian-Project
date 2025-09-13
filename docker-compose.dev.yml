@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # SQL Server Database
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: todoapp-sqlserver-dev
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: YourStrong@Passw0rd
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_dev_data:/var/opt/mssql
+    networks:
+      - todoapp-dev-network
+    restart: unless-stopped
+
+  # ASP.NET Core Backend (Development)
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: todoapp-backend-dev
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=TodoAppDb;User=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;MultipleActiveResultSets=true
+    ports:
+      - "5000:5000"
+    depends_on:
+      - sqlserver
+    networks:
+      - todoapp-dev-network
+    restart: unless-stopped
+    volumes:
+      - ./Backend:/app/src
+    command: ["dotnet", "watch", "run", "--project", "/app/src/TodoApp.Api.csproj", "--urls", "http://+:5000"]
+
+networks:
+  todoapp-dev-network:
+    driver: bridge
+    name: todoapp-dev-network
+
+volumes:
+  sqlserver_dev_data:
+    driver: local
+    name: todoapp-sqlserver-dev-data
+
